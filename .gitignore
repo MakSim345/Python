@@ -1,0 +1,69 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.exe
+*.pyc
+*.py[cod]
+
+# Result files:
+*.html
+*.xml
+*.js
+*.png
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+
+# VIM/GVIM session files
+*.vim
+
+#private info files:
+google_auth.py
+index.html
+
+*.csv
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+*.log
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
