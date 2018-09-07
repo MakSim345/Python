@@ -1,0 +1,70 @@
+We want... a shrubbery! (missed)
+http://www.codeskulptor.org/#user37_2R2FZNo1ew_0.py
+
+Rock scissors lizard... (30-SEP-2014)
+http://www.codeskulptor.org/#user37_2R2FZNo1ew_10.py
+
+Guess the number... (05-OCT-2014)
+http://www.codeskulptor.org/#user38_2R2FZNo1ew_20.py
+
+The timer..... (09-OCT-2014)
+http://www.codeskulptor.org/#user38_2R2FZNo1ew_40.py
+
+Ping-Pong.... (19-OCT-2014)
+http://www.codeskulptor.org/#user38_2R2FZNo1ew_48.py
+
+The Memory... (26-OCT-2014)
+http://www.codeskulptor.org/#user38_2R2FZNo1ew_55.py
+
+BLACKJACK (02-NOV-2014)
+http://www.codeskulptor.org/#user38_TB27YzvkNm_5.py
+
+SPACESHIP (09-NOV-2014)
+http://www.codeskulptor.org/#user38_FEOFgkND6A_6.py
+___________________________________________
+SimpleGui for offline programming:
+
+http://stackoverflow.com/questions/16387770/how-to-integrate-simplegui-with-python-2-7-and-3-0-shell
+
+Objectively, this is the best solution
+
+The package implement simplegui, codeskulptor, numeric and simpleplot modules.
+
+    Online HTML documentation: https://simpleguics2pygame.readthedocs.org/en/latest/
+        Complete installation on Window$ in few steps: http://simpleguics2pygame.readthedocs.org/en/latest/#complete-installation-on-window-in-few-steps
+    Sources and installers: https://bitbucket.org/OPiMedia/simpleguics2pygame
+
+In your code, replace the import command
+
+import simplegui
+
+by
+
+try:
+    import simplegui
+except ImportError:
+    import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
+
+and your code run in CodeSkulptor and in standard Python with this package.
+
+
+Installation
+
+If pip is installed on your platform you can do:
+
+>>> pip install SimpleGUICS2Pygame
+
+(If several Python implementations are installed, maybe you must use something like pip2 or pip3 instead pip command.)
+
+Without pip, download the archive SimpleGUICS2Pygame-?.tar.gz, unzip it somewhere. Next in the somewhere/SimpleGUICS2Pygame-?/ subdirectory run:
+
+>>> python setup.py install
+
+In both cases, you must use admin access. So with GNU/Linux you will probably do:
+
+>>> sudo [your command]
+
+Module simpleplot require matplotlib (and must be installed separately).
+
+Modules simplegui_lib (and its submodules) and simpleguics2pygame (except for the Timer class) require Pygame (and must be installed separately).
+

@@ -1,0 +1,3 @@
+echo on
+REM copy C:\Dropbox\images\Old_Comp.jpg .
+ll -a

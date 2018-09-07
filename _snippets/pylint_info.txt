@@ -1,0 +1,19 @@
+
+1. To run pylint:
+> pylint cross_check.py
+
+or 
+
+> pylint cross_check.py | head
+
+to see main part, and observe result.
+
+2. To run pep8:
+
+> pep8 cross_check.py
+
+and observe result.
+
+3. Install:
+    > pip install pylint
+    > pip install pep8

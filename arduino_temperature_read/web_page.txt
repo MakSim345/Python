@@ -1,0 +1,53 @@
+// =============Формируем HTML-страницу=================================================           
+client.println("HTTP/1.1 200 OK");
+client.println("Content-Type: text/html");
+client.println();
+client.println("<head> ");
+client.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8' /> ");
+client.println("<title> :: Упр.Arduino:: V1.1</title>");
+client.println("</head> ");
+client.println("<body");
+client.println("<hr />"); 
+client.println("<h1> ::Упр.Arduino:: </h1>");
+if (LEDON)
+    { 
+    client.println("<form method=get name=LED><input type=radio name=Level value=1 CHECKED>Включить<input type=radio name=Level value=0>Выключить<input type=submit value=OK></form>");
+    client.println("<font size=’5′>LED-статус: ");
+    client.println("<font size=’5′>Вкл."); 
+    }
+else
+    { 
+    client.println("<form method=get name=LED><input type=radio name=Level value=1>Включить<input type=radio name=Level value=0 CHECKED>Выключить<input type=submit value=OK></form>");             
+    client.println("<font size=’5′>LED-статус: ");
+    client.println("<font size=’5′>Выкл"); 
+    }          
+    //==============Вывод значений на web-страницу============================               
+    client.println("<hr />"); //линия=====================================             
+    client.println("Tемпература = ");  //Температура с DHT 22             
+    client.println(t);
+    client.println(" *C"); 
+    client.println("<br> "); //перенос на след. строчку
+    client.println("Влажность = "); //Влажность с DHT 22 
+    client.println(h);  
+    client.println(" %\t"); 
+    client.println("<br> "); //перенос на след. строчку
+    client.println("<hr />"); //линия=====================================            
+    client.println("Давление = ");     //давление с BMP 085   
+    client.println(Pa);   
+    client.println(" mm.рт.ст.");   
+    client.println("<br> "); //перенос на след. строчку   
+    client.println("<hr />");  //линия=====================================    
+    client.println("Давление = ");    //давление с BMP 085     
+    client.println(Pa2);           
+    client.println(" in Hg");  
+    client.println("<br> "); //перенос на след. строчку     
+    client.println("<hr />");  //линия=====================================    
+    client.println("Tемпература внутреняя = "); //температура с BMP 085 
+    client.println(tdpa);  
+    client.println(" *C");  
+    client.println("<br> "); //перенос на след. строчку    
+    client.println("<hr />");  //линия=====================================  
+    //==================================================================== 
+    client.println("</body></html>"); 
+    //очищаем строку для следующего считывания 
+    //==============Останавливаем web-client===============================

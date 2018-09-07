@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/8057801/installing-matplotlib-under-windows
+
+hi, I installed all the tools you listed from setuptools to cycler and then I did pip install matplotlib but I get this error Command "python setup.py egg_info" failed with error code 1. Any ideas?
+
+I executed "pip install --upgrade setuptools" from a command prompt with administrator rights and after that "pip install matplotlib" worked fine for me
+

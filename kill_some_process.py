@@ -1,0 +1,86 @@
+import urllib2
+import os
+
+class process_kill():
+    def __init__(self):
+        '''- '''
+        self.array_to_terminate = []
+
+    def set_genie_process_list(self):
+        GasModGenie = "GasModGenie.exe"
+        GasModTester = "GasModTester.exe"
+        AlarmManager = "AlarmManagerGenie.exe"
+        GUI = "Genied.exe"
+        PKPD = "PKPDModeler.exe"
+        self.array_to_terminate.append(GUI)
+        self.array_to_terminate.append(GasModTester)
+        self.array_to_terminate.append(AlarmManager)
+        self.array_to_terminate.append(GasModGenie)
+        self.array_to_terminate.append(PKPD)
+
+    def set_list_to_terminate(self, _array):
+        self.array_to_terminate = _array
+    #endif
+
+    def kill_process(self, _process_to_kill):
+        # os.system("taskkill /im Genied.exe /f")
+        print "\nProcess " + _process_to_kill + " will be terminated!"
+        exec_line =  "taskkill /im " + _process_to_kill +" /f"
+        os.system(exec_line)
+    #endif
+
+    def kill_all_processes(self):
+        ''' kills all processes from the internal array'''
+        for key in self.array_to_terminate:
+            # print key
+            self.kill_process(key)
+        #end_for
+    #endif
+
+    def kill_all_genie_processes(self):
+        self.set_genie_process_list()
+        self.kill_all_processes()
+    #endif
+
+
+
+# main entrance point:
+if __name__ == "__main__":
+
+    print "Main program begins"
+    print ""
+
+    pk = process_kill()
+    pk.kill_process("entvutil.exe")
+    pk.kill_process("AgentChk.exe")
+    pk.kill_process("McTray.exe")
+    pk.kill_process("mfefire.exe")
+    pk.kill_process("mfeann.exe")
+    pk.kill_process("mfevtps.exe")
+    pk.kill_process("wuauclt.exe")
+    pk.kill_process("FireSvc.exe")
+    pk.kill_process("armsvc.exe")
+    pk.kill_process("jp2launcher.exe")
+    pk.kill_process("java.exe")
+    pk.kill_process("iTunesHelper.exe")
+    pk.kill_process("F5MachineCertService.exe")
+    pk.kill_process("F5InstallerService.exe")
+    pk.kill_process("apUpdate.exe")
+    pk.kill_process("connect.exe")
+    pk.kill_process("concentr.exe")
+    pk.kill_process("ApMsgFwd.exe")
+    pk.kill_process("jucheck.exe")
+    pk.kill_process("jusched.exe")
+    pk.kill_process("TrustedInstaller.exe")
+    pk.kill_process("apUpdate.exe")
+    pk.kill_process("ccnfAgent.exe")
+    pk.kill_process("CAF.exe")
+    pk.kill_process("cam.exe")
+    pk.kill_process("cfSysTray.exe")
+    # pk.kill_process("far.exe")
+    # pk.kill_process("conhost.exe") - console emulator!
+
+    # pk.kill_process("")
+
+    print ""
+    print "Main program ends"
