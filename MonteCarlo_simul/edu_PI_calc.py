@@ -9,15 +9,18 @@ import sys, traceback
 from datetime import date
 from random import random
 
+def inCircle(x, y):
+	return x*x + y*y < 1.0
 
 def pi_calc_02(trials):
-    hits = 0
+    inside = 0
     for i in xrange(trials):
         x = random()
         y = random()
-        if x*x + y*y < 1.0:
-            hits += 1
-    return 4.0 * hits / trials
+        # if x*x + y*y < 1.0:
+        if inCircle(x, y):
+            inside += 1
+    return 4.0 * inside / trials
 
 def pi_calc_01():
     _sum = 0
@@ -80,9 +83,9 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
     #number = input ("Enter a non-negative integer to take factorial of: ")
     #factorial_calc(number)
 
-    #number = input ("Enter a non-negative integer: ")
-    #print pi_calc_02(number)
-    pi_calc_01()
+    number = input ("Enter a non-negative integer: ")
+    print pi_calc_02(number)
+    # pi_calc_01()
 
     print ""
     print "Main program end."
