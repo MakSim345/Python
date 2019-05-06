@@ -14,12 +14,11 @@
 # Description: .
 # ============================================================
 
-import os, sys
+import os
+import sys
 import urllib2
 import time
 import zlib
-import hashlib
-import subprocess
 from search_and_destroy import *
 from file_manager import md5_hash
 from file_manager import file_manager
@@ -94,9 +93,9 @@ class search_dublicates():
 
         # rename old database file to give place for next one:
         self._fm.rename_file(self._database_file, self._database_old_file)
+        # Erase old database file to give place for next one:
+        # self._fm.remove_file(self._database_file)
         
-        #TODO: find out how to ignore folder 'Dropbox/.dropbox.cashe'
-        #TODO: 
         _str_ignore_dir = '.dropbox.cache'    
         for path, subdirs, files in os.walk(self._search_path):
             if _str_ignore_dir in subdirs:
@@ -138,16 +137,15 @@ class search_dublicates():
         _str_to_log = "Total number of checked files: " + str(self._all_files_ctr)
         print _str_to_log
         #self._trace.saveToLog(_str_to_log)
-        _str_to_log = "Same files counter = " + str(self._counter)
-        print _str_to_log
+        # _str_to_log = "Same files counter = " + str(self._counter)
+        # print _str_to_log
         print ""
-        #self._trace.saveToLog(_str_to_log)
+        self._trace.saveToLog(_str_to_log)
         
         saveDict(self._database_file, self._dict)
 
-        # self.compare_dictionaryes()
-
     def compare_dictionaryes(self):
+        '''ATTN: this function shall call by an object! Outside of class'''
         dict_orig = readDict(self._database_old_file)
         dict_next = readDict(self._database_file)
         
@@ -155,10 +153,16 @@ class search_dublicates():
         b = compare_dict(dict_orig, dict_next, 'REMOVED')
         c = compare_dict(dict_orig, dict_next, 'CHANGED')
 
-        print "Result:", a, b, c
-        messageBody = a + b + c
-        print messageBody
-        self._trace.saveToLog(messageBody)
+        # print "Result:", a, b, c
+        # put results to a list and sort them:
+        messageBody = a.split('\n') + b.split('\n')  + c.split('\n')
+        messageBody.sort()
+
+        #convert list to a string:
+        retMessageBody = '\n'.join(messageBody)
+        print retMessageBody
+            
+        self._trace.saveToLog(retMessageBody)
 
         #make a backup for today:
         timestr = time.strftime("%Y-%m-%d")
@@ -166,31 +170,9 @@ class search_dublicates():
         self._fm.remove_file(_str_file_name_to_bkp)
         self._fm.rename_file(self._database_old_file, _str_file_name_to_bkp)
 
-        return messageBody # for sending via e-mail
-    
-    def crc_file_md5(self, _filename):
-        prev = 0
-        resultMD5 = []
-        self._file_size = os.path.getsize(_filename)
-        try:
-            cmd = ['md5sum', _filename]
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            resultMD5.append(proc.stdout.readline())
-            proc.stdout.close()
-            # print "calc_md5_exe: ", resultMD5[0]
-            return resultMD5[0][1:33]
-        except IOError as (errno, strerror):
-            print "\nI/O error({0}): {1}".format(errno, strerror)
-            return self._ret_val_error
-        except ValueError:
-            print "\nCould not convert data to an integer."
-            return self._ret_val_error
-        except:
-            print "\nUnexpected error:", sys.exc_info()[0]
-            return self._ret_val_error
-            raise
-    #endif
-
+        retMessageBody = timestr + "\n" + retMessageBody
+        return retMessageBody # for sending via e-mail
+        
     def crc_file(self, _file_name_to_open):
         prev = 0
         try:
@@ -210,9 +192,17 @@ class search_dublicates():
         #for eachLine in _file:
         #    prev = zlib.crc32(eachLine, prev)
         #return "%X"%(prev & 0xFFFFFFFF)
+        try:
+            for eachLine in self.read_in_chunks(_file):
+                prev = zlib.crc32(eachLine, prev)
+        except:
+            _str_to_log = "Error in crc_file(): " + _file_name_to_open + " can not be read!"
+            self._trace.saveToLog(_str_to_log)
+            #self._trace.saveToLog(sys.exc_info()[0])
+            print "\nUnexpected error:", sys.exc_info()[0]
+            return "%X"%(prev & 0xFFFFFFFF)
+            raise
 
-        for eachLine in self.read_in_chunks(_file):
-            prev = zlib.crc32(eachLine, prev)
         return "%X"%(prev & 0xFFFFFFFF)
 
     def read_in_chunks(self, file_object, chunk_size=1024):

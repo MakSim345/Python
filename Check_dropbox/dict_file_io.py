@@ -58,7 +58,7 @@ def compare_dict(dict_to_test, dict_to_cmp, _rem = 'ADDED'):
                 if dict_to_cmp[_key] == dict_to_test[_key]:
                     pass # print "file", _key, "was not changed"
                 else:
-                    tmp_str = _rem + ": <" + _key + ">"
+                    tmp_str = _rem + ": <" + _key[19:] + ">"
                     ret_val = ret_val + '\n' + tmp_str
                 #endif
             #endif    
@@ -67,7 +67,7 @@ def compare_dict(dict_to_test, dict_to_cmp, _rem = 'ADDED'):
             if _rem == 'CHANGED':
                 pass
             else:    
-                tmp_str = _rem + ": <" + _key + ">"
+                tmp_str = _rem + ": <" + _key[19:] + ">"
                 ret_val = ret_val + '\n' + tmp_str
         #endif    
     #end_for

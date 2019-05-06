@@ -22,6 +22,8 @@ class sendSMS():
             self.u_pass.gmail_provider()
         elif provider == 'YANDEX':
             self.u_pass.yandex_provider()
+        elif provider == 'YAHOO':
+            self.u_pass.yahoo_provider()    
         
         self.init_provider()
 
@@ -76,15 +78,18 @@ class sendSMS():
                 server.ehlo()
                 server.login(self.ACCOUNT, self.PASSWORD)
                 
+                #self.recepient = self.to_mama
                 #server.sendmail(self.ACCOUNT, self.recepient, msg.as_string())
                 #print "SMS sent to", self.recepient, "via", self.ACCOUNT
                 
-                #server.sendmail(self.ACCOUNT, self.to_yuriy, msg.as_string())
-                #print "SMS sent to", self.to_yuriy, "via", self.ACCOUNT
+                #self.recepient = self.to_tolik_gmail
+                #server.sendmail(self.ACCOUNT, self.recepient, msg.as_string())
+                #print "SMS sent to", self.recepient, "via", self.ACCOUNT
                 
-                server.sendmail(self.ACCOUNT, self.to_my_gmail, msg.as_string())
-                print "SMS sent to", self.to_my_gmail, "via", self.ACCOUNT
-                   
+                self.recepient = self.to_my_gmail
+                server.sendmail(self.ACCOUNT, self.recepient, msg.as_string())
+                print "SMS sent to", self.recepient, "via", self.ACCOUNT
+                
                 server.quit()
                 self._internal_loop = False
             except:
@@ -114,13 +119,14 @@ if __name__ == "__main__":
 
     try:
         sender =  sendSMS('YANDEX')
-        #sender =  sendSMS('GMAIL')
+        # sender =  sendSMS('GMAIL')
     
-        weather = weather_city()
-        weather.set_city_url(_hki_url)
+        # weather = weather_city()
+        # weather.set_city_url(_hki_url)
         #result = sender.send_info_sms(weather.get_weather_for_city())
 
-        stMess = "О, сколько нам открытий чудных готовит просвещенья дух. "
+        # stMess = "О, сколько нам открытий чудных готовит просвещенья дух. "
+        stMess = "2019-TEST"
         #print stMess
 
         # stMess = MIMEText(testMess, _charset="cp1251")

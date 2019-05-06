@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # ============================================================
 #
+# Copyright (c) 2012 GENERAL ELECTRIC COMPANY
 #
 # ============================================================
 #
+# Project:        Intrinsic Carestation SW
 #
 # Author:         YS / Genie SW Team
 #
