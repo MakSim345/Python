@@ -28,6 +28,7 @@
 
 #private info files:
 google_auth.py
+telegram_auth.py
 index.html
 
 *.csv
