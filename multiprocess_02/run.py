@@ -7,8 +7,6 @@ import os
 import time
 import urllib2
 import sys, traceback
-from net_control import net_control
-from multithread_workers import workers
 
 
 def checkConnection(): 
