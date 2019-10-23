@@ -128,7 +128,8 @@ if __name__ == "__main__":
     #print "Main program start."
     #print ""
     
-    search_path_main_box = "D:/dev/"
+    # search_path_main_box = "D:/dev/"
+    search_path_main_box = "C:/dev/"
     # search_path_main_box = "D:/dev/git_test"
     
     dir_list = search_for_files(search_path_main_box)
