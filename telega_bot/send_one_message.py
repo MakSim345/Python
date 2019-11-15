@@ -28,7 +28,7 @@ bot = telebot.TeleBot(TOKEN)
 # polling does not work for now. 2019-JUN
 # bot.polling(none_stop=True, interval=0)
 
-@bot.message_handler(content_types=['text'])
+# @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     if message.text == "/help":
         bot.send_message(message.from_user.id, "Напиши привет")
