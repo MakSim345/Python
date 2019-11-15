@@ -399,8 +399,10 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
                 print _msg_to_sms
                 print "SMS sending to ...."
                 subj_for_mail = 'Basement info'
+                # 2019-SEP: YS - remove sending alarm, due to port inactivity
                 # send messsage:
-                send_alarm_mail(subj_for_mail, _msg_to_sms)
+                # send_alarm_mail(subj_for_mail, _msg_to_sms) 
+                # 
             # end_if
 
             # create web page in certain interval of time:
