@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "C:\dev\Python\BeautifulSoup\test02.py", line 23, in <module>
+    page = requests.get(url)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 69, in get
+    return request('get', url, params=params, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 50, in request
+    response = session.request(method=method, url=url, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 465, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 594, in send
+    history = [resp for resp in gen] if allow_redirects else []
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 196, in resolve_redirects
+    **adapter_kwargs
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 573, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\adapters.py", line 431, in send
+    raise SSLError(e, request=request)
+SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:661)
+Traceback (most recent call last):
+  File "C:\dev\Python\BeautifulSoup\test02.py", line 23, in <module>
+    page = requests.get(url)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 69, in get
+    return request('get', url, params=params, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 50, in request
+    response = session.request(method=method, url=url, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 465, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 594, in send
+    history = [resp for resp in gen] if allow_redirects else []
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 196, in resolve_redirects
+    **adapter_kwargs
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 573, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\adapters.py", line 431, in send
+    raise SSLError(e, request=request)
+SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:661)
+Traceback (most recent call last):
+  File "C:\dev\Python\BeautifulSoup\test02.py", line 23, in <module>
+    page = requests.get(url)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 69, in get
+    return request('get', url, params=params, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 50, in request
+    response = session.request(method=method, url=url, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 465, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 573, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\adapters.py", line 431, in send
+    raise SSLError(e, request=request)
+SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:661)
+Traceback (most recent call last):
+  File "C:\dev\Python\BeautifulSoup\test02.py", line 24, in <module>
+    page = requests.get(url)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 69, in get
+    return request('get', url, params=params, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\api.py", line 50, in request
+    response = session.request(method=method, url=url, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 465, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Python27\lib\site-packages\requests\sessions.py", line 573, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Python27\lib\site-packages\requests\adapters.py", line 431, in send
+    raise SSLError(e, request=request)
+SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:661)
+Traceback (most recent call last):
+  File "C:\dev\Python\BeautifulSoup\test02.py", line 33, in <module>
+    soup =BeautifulSoup(page.text, "html.parser")
+AttributeError: 'str' object has no attribute 'text'
