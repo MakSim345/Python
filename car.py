@@ -10,6 +10,7 @@ import hashlib
 
 from xml.dom import minidom
 
+# "https://habr.com/ru/post/455796/"
 
 class Vehicle:
     def __init__ (self, color, model):
