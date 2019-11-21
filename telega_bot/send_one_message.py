@@ -90,9 +90,10 @@ if __name__ == '__main__':
     # text, chat = get_last_chat_id_and_text(get_updates())
     print "text:", text
     print "chat:", chat
+    print "chat_id:", chat_id
     # text = "Привет, чем я могу тебе помочь?"
-    # text_to_send = "Я тебя не понимаю. Напиши /help."
-    text_to_send = get_timestamp()
+    text_to_send = "Я тебя не понимаю. Напиши /help."
+    #text_to_send = get_timestamp()
     send_message(text_to_send, chat_id)
     # send_message(chat_id, "Я тебя не понимаю. Напиши /help.")
 
