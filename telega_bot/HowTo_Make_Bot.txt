@@ -1,0 +1,294 @@
+NOV-2019
+
+Свой Telegram бот для отслеживания uptime своих серверов на python и docker
+
+1. Делаем телеграм бота
+
+Для начала нужно написать бота, который будет пинговать нужные ip и посылать сообщение, когда нужный сервис пропадает из сети, а потом появляется
+
+Я понимаю, что для ресурса habr статья достаточно простая, и к тому же я не старался расписывать каждую строчку кода, потому что весь код достаточно прост для понимания даже новичкам. Решил поделиться как просто сделать своего бота в докере, который будет делать полезную работу.
+
+1.1 Как хранить конфиг
+
+Конфиг я решил хранить в виде yaml файла.
+
+botid: токен
+userid: id_пользователя, которому отправляются сообщения
+hosts:
+  - "8.8.8.8:Google DNS Server"
+  - "yandex.ru:Yandex domain name"
+
+По порядку botid — это токен, который выдает @botfather при создании нового бота.
+
+userid — это id пользователя телеграма, которому будут приходить в чат сообщения от бота. Можно получить с помощью @userinfobot
+
+hosts — это те сервисы, которые бот будет пинговать. Можно задавать как ip адрес, так и доменное имя. Через двоеточие указывается комментарий к адресу, этот комментарий будет подставляться в сообщении вместо адреса.
+
+1.2 Сам скрипт
+
+Для начала создаем класс для хоста.
+
+class address:
+
+  def __init__ (self, address, comment):
+
+    self.address = address
+    self.comment = comment
+    self.status = True
+
+address — это ip или доменное имя.
+comment — комментарий из yaml файла.
+status — в сети хост или нет. По умолчанию в сети.
+
+Скрипт
+
+from telegram import Bot
+from pythonping import ping
+import time
+import yaml
+from libs.host import address
+
+def init():
+
+    """
+    Здесь парсим конфиг файл и подключаем бота,
+    запоминаем userid и передаем список хостов функции set_hosts
+    """
+
+    global bot, userid
+
+    with open('/usr/src/app/config.yaml') as f:
+        try:
+            docs = yaml.load_all(f, Loader=yaml.FullLoader)
+
+            for doc in docs:
+                for k, v in doc.items():
+                    if k == "botid":
+                        bot = Bot(v)
+                    elif k == "userid":
+                        userid = v
+                    elif k == "hosts":
+                        set_hosts(v)
+
+        except yaml.YAMLError as exc:
+            print(exc)
+
+def set_hosts(hosts):
+
+    """
+    Здесь парсим список хостов и передаем их в массив
+    """
+
+    global hosts_list
+    hosts_list = []
+
+    for item in hosts:
+        ac = item.split(":")
+        hosts_list.append(address(ac[0], ac[1]))
+
+def send_message(message):
+
+    """
+    Посылаем сообщение пользователю
+    """
+
+    bot.send_message(userid, message, parse_mode='HTML', disable_web_page_preview=True)
+
+def ping_host(address):
+
+    """
+    Логика приложения. Хост по умолчанию в сети. Если он перестает откликаться,
+    то ему присваивается статус не в сети и отправляется сообщение. Как только он
+    появляется в сети, происходит обратный процесс и тоже посылается сообщение.
+    """
+   
+    if ping_url(address.address):
+        if not address.status:
+            address.status = True
+            send_message(address.comment + " is up again")
+    else:
+        if (address.status):
+            address.status = False
+            send_message(address.comment + " is down")
+
+def ping_url(url):
+
+    """
+    Пинг хоста. Response list - это ответ библиотеки ping. По умолчанию она
+    посылает четыре пакета. Если все пакеты пропали, то хост считается неактивным.
+    """
+
+    i = 0;
+
+    try:
+        response_list = ping(url)
+
+        for response in response_list:
+            if (not response.success):
+                i += 1
+
+        if (i == 4):
+            return False
+        else:
+            return True
+            
+    except Exception as e:
+        send_message(str(e))
+
+def main():
+
+    """
+    Все просто. Бесконечный цикл, который пингует сервисы один за другим.
+    """
+
+    init()
+
+    while True:
+
+        for host in hosts_list:
+            ping_host(host)
+
+        time.sleep(30)
+
+if __name__ == '__main__':
+    main()
+
+Собираем docker образ
+
+Как установить docker и docker-compose я писал в этой статье.
+
+Нужно создать dockerfile. Рядом в папке code положить исходный код бота.
+
+FROM python:buster
+RUN pip3 install python-telegram-bot pythonping pyyaml
+WORKDIR /usr/src/app
+COPY ./code/. .
+ENTRYPOINT ["python"]
+CMD ["main.py"]
+
+Подключаем докер образ из официального репозитория python. Устанавливаем библиотеки. Текущей папкой назначаем /usr/src/app. Копируем код в эту папку. Утилитой, вызываемой при запуске, будет python. CMD передает параметр для запуска — main.py.
+
+Дальше нужно собрать образ и положить в репозиторий
+
+docker build -t alsoeast/pingbot:1.0 .
+docker push alsoeast/pingbot:1.0
+
+Для запуска docker образов я использую docker-compose.
+
+version: '3'
+
+networks:
+  default:
+    external:
+      name: network
+
+services:
+
+  pingbot:
+    container_name: pingbot
+    image: alsoeast/pingbot:1.0
+    restart: always
+    volumes:
+      - ./config.yaml:/usr/src/app/config.yaml
+
+Образ берется из репозитория, монтируется файл config.yaml, чтобы скрипт мог получить аргументы. Осталось только запустить
+
+docker-compose up -d
+
+Если кому-то нужно, бот доступен на docker hub.
+Теги:
+linux
+docker
+python
+ЧИТАЮТ СЕЙЧАС
++4
+2,7k
+6
+3,0
+Карма
+3,2
+Рейтинг
+3
+Подписчики
+0
+Подписки
+also_east
+Системный администратор
+Сайт
+Поделиться публикацией
+ПОХОЖИЕ ПУБЛИКАЦИИ
+ВАКАНСИИ
+
+Middle or Senior System Administrator (Linux)
+INCOMA
+Москва
+до 100 000 
+
+Embedded Linux Low Level Software Engineer
+Сбербанк
+Москва
+от 180 000 
+
+Data Science Engineer
+АО «Эволента»
+Саранск
+от 50 000 
+
+Системный администратор Linux / Специалист поддержки L2
+CYBERZILLA-PRIVACY
+Можно удаленно
+от 60 000 
+
+DevOps specialist
+Black Wall Group
+Москва
+от 100 000 до 130 000 
+Все вакансии
+Реклама
+Комментарии 6
+
+Zulusho
+5 ноября 2019 в 23:57
++1
+Есть готовая бесплатная альтернатива — Uptime Robot, присылает сообщения и в телеграм, и на почту тоже
+also_east
+вчера в 00:06
+0
+Я не регистрировался, но в FAQ там написано, что проверяются сайты на ошибки вроде «200-ok», «404-not found». Потом 30 секунд другими методами (какими я не нашел). И проверка выполняется раз в пять минут.
+
+Здесь бот проверяет IP по ICMP пакетам. Т.е. пинговать можно не сайты, а какой-нибудь mikrotik в офисе. И с любым интервалом.
+
+Согласен, что это велосипед, но для меня работает.
+Sly_tom_cat
+вчера в 10:39
+0
+Спасибо, утянул себе.
+
+Простите за тупой вопрос — но вот этот пункт
+
+userid — это id пользователя телеграма, которому будут приходить в чат сообщения от бота. Можно получить с помощью @usinfobot
+
+
+вызвал у меня некоторое непонимание.
+
+@usinfobot на /help не отвечает, и вообще ничего не отвечает…
+Гугление по userid для телеги — ничего не дало. На хелпах телеги пишут только про имя пользователя. Это одно и тоже или нет?
+also_east
+вчера в 10:51
+0
+User id — это идентификатор (число) пользователя в телеграме. Вот, нашел еще бота, который вам сообщит ваш id @userinfobot. По ссылке все расписано.
+
+hyipcoins.top/kak-uznat-svoy-telegram-user-id
+Sly_tom_cat
+вчера в 11:12
+0
+Спасибо огромное!!!
+Чувствую что ваши навыки гугления сильнее прокачаны чем мои :)
+
+SSSerg
+вчера в 13:20
+0
+from telegram import Bot
+Статья полезна этой строчкой — из которой я узнал, что есть модуль для Python предназначенный для работы с ботами
+
+

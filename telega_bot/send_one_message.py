@@ -17,7 +17,9 @@ import json
 import requests
 
 from telegram_auth import user_token
-    
+from news_from_izrael import getTheNews
+
+
 u_token = user_token()
 TOKEN = u_token.token
 
@@ -83,17 +85,25 @@ if __name__ == '__main__':
     text = "empty"
     chat = "12345"
     chat_id = u_token.chat_id
-    #bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
+    # bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
     # bot.send_message(chat_id, "Привет, чем я могу тебе помочь?")
     # bot.send_message(chat_id, "Я тебя не понимаю. Напиши /help.")
-    #bot.send_message("Привет, чем я могу тебе помочь?")
+    # bot.send_message("Привет, чем я могу тебе помочь?")
     # text, chat = get_last_chat_id_and_text(get_updates())
     print "text:", text
     print "chat:", chat
     print "chat_id:", chat_id
+    
     # text = "Привет, чем я могу тебе помочь?"
-    text_to_send = "Я тебя не понимаю. Напиши /help."
-    #text_to_send = get_timestamp()
+    # text_to_send = "Я тебя не понимаю. Напиши /help."
+    
+    # ATTN! use follow: .encode('utf-8') for prevent 
+        # UnicodeEncodeError: 'ascii' codec can't encode character u'\xa0' 
+        # in position 20: ordinal not in range(128)
+    
+    text_to_send = getTheNews().encode('utf-8')
+    # text_to_send = get_timestamp()
+    print text_to_send
     send_message(text_to_send, chat_id)
     # send_message(chat_id, "Я тебя не понимаю. Напиши /help.")
 
