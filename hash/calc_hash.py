@@ -43,6 +43,7 @@ def calc_md5(_filename):
     # print "To run:", exec_line
     # os.system(exec_line)
     resultMD5 = hashlib.md5(open(_filename).read()).hexdigest()
+    print "calc_md5:", _filename, resultMD5
     return resultMD5
 
 def calc_md5_exe(_filename):
@@ -55,7 +56,7 @@ def calc_md5_exe(_filename):
     # resultMD5 = subprocess.Popen(["md5sum.exe", _filename], stdout=subprocess.PIPE).communicate()[0]
     p = subprocess.Popen(exec_line, shell=True, stdout=subprocess.PIPE)
     resultMD5, filename = p.communicate()[0].split()
-    # print "calc_md5_exe:", _filename, resultMD5
+    print "calc_md5_exe:", _filename, resultMD5
     return resultMD5
 
 
@@ -64,18 +65,10 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
     print "Main program start."
     print ""
     
-    file_1 = "1.xml"
-
-    xmldoc = minidom.parse(file_1)
-
-    itemlist = xmldoc.getElementsByTagName('item')
-
-    print(len(itemlist))
-
-    print(itemlist[0].attributes['name'].value)
-
-    for s in itemlist:
-        print(s.attributes['name'].value)
+    # file_1 = "1.zip"
+    file_1 = "1.mp4"
+    calc_md5(file_1)
+    calc_md5_exe(file_1)
     
     print ""
     print "Main program end."
