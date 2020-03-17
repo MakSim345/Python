@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
+# -*-coding:cp1251 -*-
 
 # ============================================================
 # Description: edu project for BeautifulSoup learning.
@@ -33,17 +34,22 @@ def getTheNews():
        # print(new_news[i])        
        retStr = retStr + new_news[i] + "\n"        
     
+    # print retStr
+    # text_to_send = getTheNews().encode('utf-8')
     return retStr
 
 # main entrance point:
 if __name__ == "__main__":
-
-    print "Main program begins"
-    print ""
+    #ENCODE_STR = 'utf-8'
+    ENCODE_STR = 'UTF-8'
+    # ENCODE_STR = 'cp-1251'
 
     try:
-       
-        print getTheNews()   
+        print "Main program begins"
+        print ""
+        text_to_print = getTheNews().encode(ENCODE_STR)
+        #text_to_print = getTheNews().encode()
+        print text_to_print   
     except:
         traceback.print_exc()
         # self.log.saveMessageToLog(a)
