@@ -55,6 +55,7 @@ __pycache__
 # Installer logs
 pip-log.txt
 *.log
+errlog.txt
 
 # Unit test / coverage reports
 .coverage
