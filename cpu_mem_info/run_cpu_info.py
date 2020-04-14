@@ -79,7 +79,8 @@ class CPU_Info():
         # print '-', a , '-',
 
         for i in range(a):
-            str_graph = str_graph +  chr(254)#'|'
+            str_graph = str_graph +  '|'
+            #str_graph = str_graph +  chr(254)#'|'
         #    print '|',
         print str_graph,
         #status = status + str_graph + chr(8)*(len(status + str_graph) + 1)
