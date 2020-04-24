@@ -221,8 +221,7 @@ def move_html_to_git(file_to_copy):
         # /home/yuriy/web_tmp
     current_os = system()
     if current_os == 'Linux':
-        # str_path_on_os = '/home/yuriy/Dropbox/mindmaps/'
-        str_path_on_os = '/home/yuriy/web_tmp'
+        str_path_on_os = '/home/ys/web_tmp'
         # in Linux file need to be copy to bitbucket web folder:
         log_file_name = str_path_on_os + file_to_copy
         shutil.copy (file_to_copy, log_file_name)

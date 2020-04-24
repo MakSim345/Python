@@ -13,7 +13,7 @@ import datetime
 if __name__ == "__main__":
     print "Main program start"
     
-    str_path_on_os = '/home/yuriy/web_tmp'
+    str_path_on_os = '/home/ys/web_tmp'
     os.chdir(str_path_on_os)
     # push to bitbucket
     os.system('python commit_me.py')
