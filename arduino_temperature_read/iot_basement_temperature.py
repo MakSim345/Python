@@ -57,13 +57,13 @@ class temperature_obj():
             self.gross_temp = self.gross_temp + self.cur_temp
             self.gross_ctr = self.gross_ctr + 1
             self.avr_temp = self.gross_temp / self.gross_ctr
-    
+
         if (self.cur_temp > self.max_temp_avr):
             self.max_temp_avr = self.cur_temp
-        
+
         if (self.cur_temp < self.min_temp_avr):
             self.min_temp_avr = self.cur_temp
-        
+
 
     def get_name(self):
         return self.name
@@ -128,6 +128,11 @@ class serial_controller():
         except serial.SerialException:
             print "ERROR in open port", self.port_name
             # sys.exit(0)
+        except:
+            print "Couldn't read port %i. Traceback:" % _port_name
+            traceback.print_exc()
+        finally:
+            print("Finally: try except block successfully executed")
 
     def isOpen(self):
         ''' return status of the current port'''
@@ -248,7 +253,7 @@ def getOSname():
         print "OS - Linux"
     elif current_os == 'Windows':
         print "OS - Windows"
-    
+
     # main entrance point:
 if __name__ == '__main__' or __name__ == sys.argv[0]:
     print "Main program start."
@@ -258,9 +263,9 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
     StopLoop = False
 
     isConEstablished = False
-    
+
     # str_path_on_os = select
-    getOSname()    
+    getOSname()
 
     TIME_TO_RECONNECT = 5
 
@@ -288,7 +293,7 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
 
     # log = logEngine()
     # log.saveMessageToLog("Arduino modem control - init OK.")
-    
+
     # need to use follow command:
     # >python iot_basement_temperature COM11
     if len(sys.argv) >= 2:
@@ -336,8 +341,8 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
                 print "  Uptime:", uptime_value
                 # here print data from Arduino sensors:
                 basement.set_cur_temp(get_tmp_from_raw(data_raw))
-                print basement.get_name(), basement.get_cur_temp(), "*C [", 
-                print basement.get_min_temp(), "..", basement.get_max_temp(), "]:", 
+                print basement.get_name(), basement.get_cur_temp(), "*C [",
+                print basement.get_min_temp(), "..", basement.get_max_temp(), "]:",
                 print "%.2f" % basement.get_avr_temp()
                 web_page_gen.set_uptime(uptime_value)
                 web_page_gen.set_temp_basement(basement.get_cur_temp(),
@@ -351,7 +356,7 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
             elif "DALLAS" in data_raw:
                 freezer.set_cur_temp(get_tmp_from_raw(data_raw))
                 print freezer.get_name(), float(freezer.get_cur_temp()), "*C [",
-                print freezer.get_min_temp(), "..", freezer.get_max_temp(), "]:", 
+                print freezer.get_min_temp(), "..", freezer.get_max_temp(), "]:",
                 print "%.2f" % freezer.get_avr_temp()
                 web_page_gen.set_temp_freezer(freezer.get_cur_temp(),
                                               freezer.get_min_temp(),
@@ -400,8 +405,8 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
                 subj_for_mail = 'Basement info'
                 # 2019-SEP: YS - remove sending alarm, due to port inactivity
                 # send messsage:
-                # send_alarm_mail(subj_for_mail, _msg_to_sms) 
-                # 
+                # send_alarm_mail(subj_for_mail, _msg_to_sms)
+                #
             # end_if
 
             # create web page in certain interval of time:
