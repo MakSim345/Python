@@ -21,4 +21,11 @@ Install correct telegramm API:
     >pip install pyTelegramBotAPI
 ==============================================================================================
 
+The auth file iz in 7z with password.
+To open file in ubuntu:
 
+> sudo apt-get install p7zip-full
+> 7za x myfile.7z
+     -password will be prompted.
+
+==============================================================================================
