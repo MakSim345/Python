@@ -19,6 +19,7 @@ import telebot
 from platform import system
 from telegram_auth import user_token
 from news_from_izrael import getTheNews
+from log_engine import *
 
 sys.path.insert(0, '/home/ys/dev/scripts/weather_sms')
 from weather_unit import weather_city
@@ -36,7 +37,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    # DEBUG:
+    # DEBUG: 
     #print "get_text_message - enter:", message.text.lower()
     #print "get_text_message - enter: " + str(message.chat.id)
     if message.text.lower() == "/help":
@@ -137,7 +138,17 @@ def get_timestamp(_selector = "date"):
         return _date + ' Time: '+ _time
 
 if __name__ == '__main__':
-    bot.infinity_polling(True)
+    
+    _trace = logEngine()
+    _trace.setLogFileName("telegram_bot.log")
+    _trace.saveToLog("Bot started.")
+    _trace.saveToLog(sys.path[0])
+    while True:
+        try:
+            bot.infinity_polling(True)
+        except Exception as str_exception:
+            _trace.saveToLog(str_exception)
+            time.sleep(15)
     # bot.polling(none_stop=True)
-    #bot.polling()
+    # bot.polling()
 
