@@ -36,7 +36,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    # DEBUG: 
+    # DEBUG:
     #print "get_text_message - enter:", message.text.lower()
     #print "get_text_message - enter: " + str(message.chat.id)
     if message.text.lower() == "/help":

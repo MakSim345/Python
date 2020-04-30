@@ -13,7 +13,7 @@ import time
 import sys
 import telebot
 
-import json 
+import json
 import requests
 
 from telegram_auth import user_token
@@ -93,14 +93,14 @@ if __name__ == '__main__':
     print "text:", text
     print "chat:", chat
     print "chat_id:", chat_id
-    
+
     # text = "Привет, чем я могу тебе помочь?"
     # text_to_send = "Я тебя не понимаю. Напиши /help."
-    
-    # ATTN! use follow: .encode('utf-8') for prevent 
-        # UnicodeEncodeError: 'ascii' codec can't encode character u'\xa0' 
+
+    # ATTN! use follow: .encode('utf-8') for prevent
+        # UnicodeEncodeError: 'ascii' codec can't encode character u'\xa0'
         # in position 20: ordinal not in range(128)
-    
+
     text_to_send = getTheNews().encode('utf-8')
     # text_to_send = get_timestamp()
     print text_to_send

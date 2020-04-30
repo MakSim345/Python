@@ -4,7 +4,7 @@
 
 # ============================================================
 # Description: edu project for BeautifulSoup learning.
-# https://habr.com/ru/sandbox/132503/ 
+# https://habr.com/ru/sandbox/132503/
 # ============================================================-
 
 import sys, traceback
@@ -13,7 +13,7 @@ import requests
 
 
 def getTheNews():
-    
+
     url = 'http://mignews.com/mobile'
     new_news = []
     news = []
@@ -31,9 +31,9 @@ def getTheNews():
            new_news.append(news[i].text)
 
     for i in range(len(new_news)):
-       # print(new_news[i])        
-       retStr = retStr + new_news[i] + "\n"        
-    
+       # print(new_news[i])
+       retStr = retStr + new_news[i] + "\n"
+
     # print retStr
     # text_to_send = getTheNews().encode('utf-8')
     return retStr
@@ -49,13 +49,13 @@ if __name__ == "__main__":
         print ""
         text_to_print = getTheNews().encode(ENCODE_STR)
         #text_to_print = getTheNews().encode()
-        print text_to_print   
+        print text_to_print
     except:
         traceback.print_exc()
         # self.log.saveMessageToLog(a)
         print "Trigger Exception, traceback info forward to log file."
         traceback.print_exc(file=open("errlog.txt","a"))
-        sys.exit(1) 
+        sys.exit(1)
 
     print ""
     print "Main program ends"
