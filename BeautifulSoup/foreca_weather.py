@@ -12,7 +12,7 @@ import requests
 import urllib2
 
 # url = "https://www.foreca.com/Finland/Helsinki?tenday"
-url = 'http://www.foreca.fi/Finland/Helsinki'
+url = 'https://www.foreca.com/Finland/Helsinki'
 new_news = []
 news = []
 
@@ -28,10 +28,10 @@ if __name__ == "__main__":
 
         f = urllib2.urlopen(url)    
         page = f.read()
-        print "page: " , page
+        # print "page: " , page
 
         soup =BeautifulSoup(page, "html.parser")
-        print "soup:", (soup)
+        print (soup)
         
         news = soup.findAll('a', class_ = 'h2')
         print (news)
