@@ -36,7 +36,15 @@ class SnakeGame():
 
     def run(self):
 
-        self.screen.mainloop()
+        print "run"
+
+        # draw a food for the snake
+        food = turtle.Turtle()
+        food.shape('circle')
+        food.penup()
+        food.goto(randrange(-300, 300, 20), randrange(-300, 300, 20)) # 
+        self.screen.update()
+        #self.screen.mainloop()
         #while 1:
         #    sleep(1)
             #endfor        
@@ -51,14 +59,14 @@ if __name__ == "__main__":
     print "----------------------\n"
 
     try:
-        #sm = SnakeGame()
-        #sm.run()        
-        screen = turtle.Screen()
-        screen.title = "Snake with turtle module"
-        screen.bgcolor ('orange')
-        screen.setup (650, 650)
-        screen.tracer (0)
-        # screen.mainloop()
+        sm = SnakeGame()
+        sm.run()        
+        
+        # screen = turtle.Screen()
+        # screen.title = "Snake with turtle module"
+        # screen.bgcolor ('orange')
+        # screen.setup (650, 650)
+        # screen.tracer (0)
         turtle.mainloop()
 
     except NotImplementedError, e:
