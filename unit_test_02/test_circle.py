@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import unittest
+import random
 from circle import circle_area
 from math import pi
 
@@ -21,4 +22,7 @@ class TestCircleArea(unittest.TestCase):
         self.assertRaises(TypeError, circle_area, True)
         self.assertRaises(TypeError, circle_area, "radius")
 
-
+    def test_on_shuffled_rangre(self):
+        li = list(range(10))
+        random.shuffle(li)
+        self.assertEqual(li[3], 3)
