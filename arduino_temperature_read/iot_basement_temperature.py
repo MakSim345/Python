@@ -12,6 +12,9 @@ import shutil
 from platform import system
 from datetime import date, datetime, timedelta
 
+sys.path.insert(0, '/home/ys/Python/telega_bot')
+from send_one_message import *
+
 class todo():
     ''' TODO
     1. Check minimum allowed temperature for Frizer and for Basement
@@ -131,8 +134,8 @@ class serial_controller():
         except:
             print "Couldn't read port %i. Traceback:" % _port_name
             traceback.print_exc()
-        finally:
-            print("Finally: try except block successfully executed")
+        #finally:
+        #    print("Finally: try except block successfully executed")
 
     def isOpen(self):
         ''' return status of the current port'''
@@ -218,6 +221,9 @@ def send_alarm_mail(subj, msg):
     sender =  sendSMS('YANDEX', subj)
     #sender.set_subj_for_mail(subj)
     result = sender.send_info_sms(msg)
+
+def send_alarm_telegram(subj, msg):
+    send_message_ys(subj + ":  " + msg)
 
 def move_html_to_git(file_to_copy):
     #TODO: made it selected based on  - DONE
@@ -305,6 +311,7 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
 
     serial_port = serial_controller(_port_to_open)
 
+    send_alarm_telegram("Basement controller started", time.strftime("%Y-%m-%d %H:%M:%S") )
     while not StopLoop:
         try:
             # get time:
@@ -316,9 +323,11 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
             else:
                 # check time delay and try to open port again:
                 if ((time_cur - time_ser) > 5):
+                    serial_port.close_port()
                     print "Port not open... Try to open it"
                     serial_port.open_port()
                     time_ser = time.time()
+                #end if    
                 isConEstablished = False
 
             if ((time_cur - time_ping) > 10):
@@ -382,12 +391,14 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
                 if (basement.check_critical_temperature()):
                     subj_for_mail = 'Basement temperature alert!'
                     str_warning_message = "Basement temperature is critical: " + str(basement.get_cur_temp())
-                    send_alarm_mail(subj_for_mail, str_warning_message)
+                    #send_alarm_mail(subj_for_mail, str_warning_message)
+                    send_alarm_telegram(subj_for_mail, str_warning_message)
 
                 if (freezer.check_critical_temperature()):
                     subj_for_mail = 'Freezer temperature alert!'
                     str_warning_message = "Freezer temperature is critical: " + str(freezer.get_cur_temp())
-                    send_alarm_mail(subj_for_mail, str_warning_message)
+                    # send_alarm_mail(subj_for_mail, str_warning_message)
+                    send_alarm_telegram(subj_for_mail, str_warning_message)
 
             #endif
             #endif
@@ -406,7 +417,9 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
                 # 2019-SEP: YS - remove sending alarm, due to port inactivity
                 # send messsage:
                 # send_alarm_mail(subj_for_mail, _msg_to_sms)
-                #
+
+                # 2020-MAY: YS - add telegram messaging instead of e-mail
+                send_alarm_telegram(subj_for_mail, _msg_to_sms)
             # end_if
 
             # create web page in certain interval of time:
