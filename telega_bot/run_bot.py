@@ -46,9 +46,9 @@ def get_text_messages(message):
         bot.send_message(message.chat.id, "Привет, ты написал мне /start")
     elif message.text.lower()  == "time":
         bot.send_message(message.chat.id, get_timestamp())
-    elif message.text.lower()  == 'Hello':
+    elif message.text.lower()  == 'hello':
         bot.send_message(message.chat.id, 'Привет, мой создатель')
-    elif message.text.lower()  == 'Bye':
+    elif message.text.lower()  == 'bye':
         bot.send_message(message.chat.id, 'Прощай, создатель')
     elif message.text.lower()  == 'ip':
         bot.send_message(message.chat.id, get_ip_address())
@@ -104,7 +104,10 @@ def select_ip_address(ifname):
     return retValue
 
 def get_weather(city_param='helsinki'):
+    return "Weather not implemented."
+
     text_to_send = getTheNews().encode('utf-8')
+    weather_to_send = 'Error in weather receiving'
     if city_param == 'helsinki':
         city_url = "http://www.foreca.com/Finland/Helsinki?tenday"
     else:
@@ -141,13 +144,15 @@ if __name__ == '__main__':
     
     _trace = logEngine()
     _trace.setLogFileName("telegram_bot.log")
-    _trace.saveToLog("Bot started.")
-    _trace.saveToLog(sys.path[0])
+    #_trace.saveToLog("Bot started.")
+    #_trace.saveToLog(sys.path[0])
     while True:
         try:
-            bot.infinity_polling(True)
+            # bot.infinity_polling(True)
+            bot.polling(none_stop=True)
         except Exception as str_exception:
-            _trace.saveToLog(str_exception)
+            #_trace.saveToLog(str(str_exception))
+            print "Err: ", str(str_exception)
             time.sleep(15)
     # bot.polling(none_stop=True)
     # bot.polling()
