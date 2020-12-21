@@ -23,10 +23,10 @@ if __name__ == '__main__' or __name__ == sys.argv[0]:
     hki = owm.weather_at_place('Helsinki, FI')
     weather = hki.get_weather()
     hki_temperature = weather.get_temperature('celsius')['temp']
-    print "Helsinki current temperature:", hki_temperature
+    print "Helsinki current temperature:", hki_temperature, "*C"
 
     hki_temperature = weather.get_temperature('celsius')['temp_min']
-    print "Helsinki MIN temperature:", hki_temperature
+    print "Helsinki MIN temperature:", hki_temperature, "*C"
 
     # la = owm.three_hours_forecast('Los Angeles, US')
     # print(la.will_have_clouds())
