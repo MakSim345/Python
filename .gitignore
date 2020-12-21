@@ -29,6 +29,7 @@
 *.vim
 
 #private info files:
+*_auth.py
 google_auth.py
 telegram_auth.py
 index.html
