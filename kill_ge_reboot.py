@@ -69,4 +69,5 @@ if __name__ == "__main__":
     # subprocess.call(["C:/Program Files/VistaSwitcher/vswitch64.exe"])
     # subprocess.Popen(["C:/Program Files/VistaSwitcher/vswitch64.exe"])
 
+    # raw_input()
     print("Main program ends")
